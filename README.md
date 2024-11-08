@@ -1,2 +1,2 @@
-# Tab possition
-Chrome extension to add the tab position at the beggining of the tab tittle.
+# Tab enumerator 
+Enumerates each tab in window.

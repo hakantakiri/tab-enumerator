@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Tab Position",
-  "version": "1.0",
-  "description": "Enumerates each tab in the current browser window.",
+  "name": "Tab Enumerator",
+  "version": "0.1.0",
+  "description": "Enumerates each tab in window.",
   "permissions": ["tabs", "scripting"],
   "host_permissions": ["*://*/*"],
   "background": {
