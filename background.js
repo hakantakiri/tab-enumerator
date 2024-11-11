@@ -25,12 +25,20 @@ function updateTabTittles() {
 }
 
 function updateTabTittle(tab) {
-  if (tab.title.substring(0, 3) != `[${tab.index + 1}]`) {
+  let currentTitle = tab.title;
+  if (regex.test(tab.title)) {
+    currentTitle = currentTitle.substring(3);
+  }
+
+  if (
+    tab.title.substring(0, 3) != `[${tab.index + 1}]` &&
+    tab.title.substring(0, 4) != `[${tab.index + 1}]`
+  ) {
     let currentTitle = tab.title;
     if (regex.test(tab.title)) {
       currentTitle = currentTitle.substring(3);
     }
-    let newTitle = `[${tab.index + 1}] ${currentTitle}`;
+    let newTitle = `[${tab.index + 1}] ${tab.title}`;
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: (title) => {
