@@ -1,4 +1,6 @@
-const regex = /^\s*\[\d+\]\s*/;
+const regex1d = /^\s*\·\d\·\s*/; // Matches if text starts with [<1number>]
+const regex2d = /^\s*\·\d{2}\·\s*/; // Matches if text starts with [<2numbers>]
+const regex3d = /^\s*\·\d{3}\·\s*/; // Matches if text starts with [<3numbers>]
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   updateTabTittle(tab);
@@ -12,7 +14,7 @@ chrome.tabs.onMoved.addListener(() => {
   updateTabTittles();
 });
 
-chrome.tabs.onRemoved.addListener((tabId) => {
+chrome.tabs.onRemoved.addListener(() => {
   updateTabTittles();
 });
 
@@ -25,12 +27,22 @@ function updateTabTittles() {
 }
 
 function updateTabTittle(tab) {
-  if (tab.title.substring(0, 3) != `[${tab.index + 1}]`) {
-    let currentTitle = tab.title;
-    if (regex.test(tab.title)) {
-      currentTitle = currentTitle.substring(3);
-    }
-    let newTitle = `[${tab.index + 1}] ${currentTitle}`;
+  const oldTitle = tab.title;
+  let currentTitle = tab.title;
+
+  if (regex1d.test(tab.title)) {
+    currentTitle = currentTitle.substring(4);
+  }
+  if (regex2d.test(tab.title)) {
+    currentTitle = currentTitle.substring(5);
+  }
+  if (regex3d.test(tab.title)) {
+    currentTitle = currentTitle.substring(6);
+  }
+
+  let newTitle = `·${tab.index + 1}· ${currentTitle}`;
+
+  if (oldTitle != newTitle) {
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: (title) => {
